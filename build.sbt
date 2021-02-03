@@ -1,36 +1,63 @@
-name := "swagger-play2"
-organization := "io.swagger"
+ThisBuild / organization := "io.swagger"
 
-scalaVersion := "2.13.1"
+lazy val play27 = ConfigAxis("play27", "play2.7")
+lazy val play28 = ConfigAxis("play28", "play2.8")
 
-crossScalaVersions := Seq(scalaVersion.value, "2.12.10")
+lazy val scala212 = "2.12.13"
+lazy val scala213 = "2.13.4"
 
-val PlayVersion = "2.7.3"
-val SwaggerVersion = "1.5.24"
-val Specs2Version = "4.6.0"
+lazy val root = (project in file("."))
+  .aggregate(app.projectRefs: _*)
+  .settings(
+//    crossScalaVersions := Nil,
+//    publish / skip := false
+  )
 
-libraryDependencies ++= Seq(
-  "com.typesafe.play" %% "play" % PlayVersion,
-  "com.typesafe.play" %% "routes-compiler" % PlayVersion,
-  "io.swagger" % "swagger-core" % SwaggerVersion,
-  "io.swagger" %% "swagger-scala-module" % "1.0.6",
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.9",
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.2",
-  "org.slf4j" % "slf4j-api" % "1.7.21",
-
-  "com.typesafe.play" %% "play-ebean" % "5.0.2" % "test",
-  "org.specs2" %% "specs2-core" % Specs2Version % "test",
-  "org.specs2" %% "specs2-mock" % Specs2Version % "test",
-  "org.specs2" %% "specs2-junit" % Specs2Version % "test",
-  "org.mockito" % "mockito-core" % "2.21.0" % "test"
-)
-
-// see https://github.com/scala/bug/issues/11813
-scalacOptions -= "-Wself-implicit"
-
-scalacOptions in Test ~= filterConsoleScalacOptions
-
-parallelExecution in Test := false // Swagger uses global state which breaks parallel tests
+lazy val app = (projectMatrix in file("app"))
+  .settings(
+    name := "swagger-play2",
+    libraryDependencies ++= Seq(
+      "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.3",
+      "org.slf4j" % "slf4j-api" % "1.7.30",
+      "org.specs2" %% "specs2-core" % "4.6.0" % Test,
+      "org.specs2" %% "specs2-mock" % "4.6.0" % Test,
+      "org.specs2" %% "specs2-junit" % "4.6.0" % Test,
+      "org.mockito" % "mockito-core" % "3.2.0" % Test,
+    ),
+    scalacOptions -= "-Xfatal-warnings",
+    Test / scalacOptions ~= filterConsoleScalacOptions,
+    Test / parallelExecution := false, // Swagger uses global state which breaks parallel tests
+  )
+  .customRow(
+    scalaVersions = Seq(scala213, scala212),
+    axisValues = Seq(play27, VirtualAxis.jvm),
+    _.settings(
+      moduleName := name.value + "_play2.7",
+      libraryDependencies ++= Seq(
+        "com.typesafe.play" %% "play" % "2.7.9",
+        "com.typesafe.play" %% "routes-compiler" % "2.7.9",
+        "io.swagger" % "swagger-core" % "1.5.24",
+        "io.swagger" %% "swagger-scala-module" % "1.0.6",
+        "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.10",
+        "com.typesafe.play" %% "play-ebean" % "5.0.2" % Test,
+      )
+    )
+  )
+  .customRow(
+    scalaVersions = Seq(scala213, scala212),
+    axisValues = Seq(play28, VirtualAxis.jvm),
+    _.settings(
+      moduleName := name.value + "_play2.8",
+      libraryDependencies ++= Seq(
+        "com.typesafe.play" %% "play" % "2.8.7",
+        "com.typesafe.play" %% "routes-compiler" % "2.8.7",
+        "io.swagger" % "swagger-core" % "1.6.1",
+        "io.swagger" %% "swagger-scala-module" % "1.0.6", // FIXME: no version supports jackson 2.10
+        "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.10.5",
+        "com.typesafe.play" %% "play-ebean" % "6.0.0" % Test,
+      )
+    )
+  )
 
 pomExtra := {
   <url>http://swagger.io</url>
