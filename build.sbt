@@ -9,8 +9,7 @@ lazy val scala213 = "2.13.4"
 lazy val root = (project in file("."))
   .aggregate(app.projectRefs: _*)
   .settings(
-//    crossScalaVersions := Nil,
-//    publish / skip := false
+    publish / skip := true
   )
 
 lazy val app = (projectMatrix in file("app"))
@@ -27,6 +26,11 @@ lazy val app = (projectMatrix in file("app"))
     scalacOptions -= "-Xfatal-warnings",
     Test / scalacOptions ~= filterConsoleScalacOptions,
     Test / parallelExecution := false, // Swagger uses global state which breaks parallel tests
+    Test / publishArtifact := false,
+    publishTo := sonatypePublishToBundle.value,
+    pomIncludeRepository := { _ => false },
+    publishMavenStyle := true,
+    releaseCrossBuild := true,
   )
   .customRow(
     scalaVersions = Seq(scala213, scala212),
@@ -59,7 +63,7 @@ lazy val app = (projectMatrix in file("app"))
     )
   )
 
-pomExtra := {
+ThisBuild / pomExtra := {
   <url>http://swagger.io</url>
   <licenses>
     <license>
@@ -105,13 +109,6 @@ pomExtra := {
     </developer>
   </developers>
 }
-
-publishTo := sonatypePublishTo.value
-
-publishArtifact in Test := false
-pomIncludeRepository := { _ => false }
-publishMavenStyle := true
-releaseCrossBuild := true
 
 import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
 
