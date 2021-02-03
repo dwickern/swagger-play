@@ -14,7 +14,7 @@ lazy val root = (project in file("."))
 
 lazy val app = (projectMatrix in file("app"))
   .settings(
-    name := "swagger-play2",
+    name := "swagger",
     libraryDependencies ++= Seq(
       "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.3",
       "org.slf4j" % "slf4j-api" % "1.7.30",
@@ -36,7 +36,7 @@ lazy val app = (projectMatrix in file("app"))
     scalaVersions = Seq(scala213, scala212),
     axisValues = Seq(play27, VirtualAxis.jvm),
     _.settings(
-      moduleName := name.value + "_play2.7",
+      moduleName := name.value + "-play2.7",
       libraryDependencies ++= Seq(
         "com.typesafe.play" %% "play" % "2.7.9",
         "com.typesafe.play" %% "routes-compiler" % "2.7.9",
@@ -51,7 +51,7 @@ lazy val app = (projectMatrix in file("app"))
     scalaVersions = Seq(scala213, scala212),
     axisValues = Seq(play28, VirtualAxis.jvm),
     _.settings(
-      moduleName := name.value + "_play2.8",
+      moduleName := name.value + "-play2.8",
       libraryDependencies ++= Seq(
         "com.typesafe.play" %% "play" % "2.8.7",
         "com.typesafe.play" %% "routes-compiler" % "2.8.7",
