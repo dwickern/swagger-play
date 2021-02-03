@@ -1,4 +1,4 @@
-ThisBuild / organization := "io.swagger"
+ThisBuild / organization := "com.github.dwickern"
 
 lazy val play27 = ConfigAxis("play27", "play2.7")
 lazy val play28 = ConfigAxis("play28", "play2.8")
