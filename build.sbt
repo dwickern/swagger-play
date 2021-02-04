@@ -129,5 +129,4 @@ releaseProcess := Seq[ReleaseStep](
   setNextVersion,
   commitNextVersion,
   releaseStepCommand("sonatypeReleaseAll"),
-  pushChanges
 )
