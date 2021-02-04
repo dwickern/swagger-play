@@ -107,6 +107,11 @@ ThisBuild / pomExtra := {
       <name>Greg Methvin</name>
       <url>https://methvin.net/</url>
     </developer>
+    <developer>
+      <id>dwickern</id>
+      <name>Derek Wickern</name>
+      <url>dwickern@gmail.com</url>
+    </developer>
   </developers>
 }
 
