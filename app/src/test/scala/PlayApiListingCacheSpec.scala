@@ -74,7 +74,10 @@ PUT /api/dog/api/:id testdata.DogController.add0(id:String)
 
       val swagger = apiListingCache.listing("127.0.0.1")
 
-      Logger("swagger").debug("swagger: " + toJsonString(swagger))
+      val json = toJsonString(swagger)
+      json must not (beNull)
+
+      Logger("swagger").debug("swagger: " + json)
 
       swagger.getSwagger must beEqualTo("2.0")
       swagger.getBasePath must beEqualTo(basePath)

@@ -1,6 +1,8 @@
 package play.modules.swagger;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import io.swagger.annotations.Info;
 import io.swagger.converter.ModelConverters;
@@ -33,6 +35,16 @@ public class PlayReader {
     private Swagger swagger;
     private PlaySwaggerConfig config;
     private RouteWrapper routes;
+
+    static {
+        // workaround for InvalidDefinitionException: Direct self-reference leading to cycle
+        Json.mapper().addMixIn(AbstractProperty.class, AbstractPropertyMixin.class);
+    }
+
+    private interface AbstractPropertyMixin {
+        @JsonIgnore
+        public abstract Property readOnly();
+    }
 
     public Swagger getSwagger() {
         return swagger;
