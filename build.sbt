@@ -9,10 +9,11 @@ lazy val scala213 = "2.13.4"
 lazy val root = (project in file("."))
   .aggregate(app.projectRefs: _*)
   .settings(
-    publish / skip := true
+    compile / skip := true,
+    publish / skip := true,
   )
 
-lazy val app = (projectMatrix in file("app"))
+lazy val app = (projectMatrix in file("."))
   .settings(
     name := "swagger",
     libraryDependencies ++= Seq(
