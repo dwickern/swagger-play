@@ -29,6 +29,11 @@ lazy val swagger = (projectMatrix in file("."))
       "org.mockito" % "mockito-core" % "3.2.0" % Test,
     ),
     scalacOptions -= "-Xfatal-warnings",
+    (Test / scalacOptions) --= Seq(
+      "-Wunused:implicits",
+      "-Wunused:explicits",
+      "-Wunused:params",
+    ),
     Test / scalacOptions ~= filterConsoleScalacOptions,
     Test / parallelExecution := false, // Swagger uses global state which breaks parallel tests
     Test / publishArtifact := false,
