@@ -26,7 +26,7 @@ jobs:
         path: |
           ~/.ivy2/cache
           ~/.sbt
-        key: ${{ runner.os }}-sbt-${{ hashFiles('**/*.sbt') }}
+        key: ${{ runner.os }}-sbt-${{ hashFiles('**/build.sbt', '**/plugins.sbt') }}
 
     - name: Run tests
       run: sbt test
