@@ -7,15 +7,19 @@ lazy val scala212 = "2.12.13"
 lazy val scala213 = "2.13.4"
 
 lazy val root = (project in file("."))
-  .aggregate(app.projectRefs: _*)
+  .aggregate(swagger.projectRefs: _*)
   .settings(
+    // for IntelliJ import: pick one project from the matrix to use
+    swagger.finder(play28, VirtualAxis.jvm)(scala213).settings,
+    target := baseDirectory.value / "target",
+    ideSkipProject := false,
     compile / skip := true,
     publish / skip := true,
   )
 
-lazy val app = (projectMatrix in file("."))
+lazy val swagger = (projectMatrix in file("."))
   .settings(
-    name := "swagger",
+    name := "swagger-play",
     libraryDependencies ++= Seq(
       "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.3",
       "org.slf4j" % "slf4j-api" % "1.7.30",
@@ -32,12 +36,13 @@ lazy val app = (projectMatrix in file("."))
     pomIncludeRepository := { _ => false },
     publishMavenStyle := true,
     releaseCrossBuild := true,
+    ideSkipProject := true,
   )
   .customRow(
     scalaVersions = Seq(scala213, scala212),
     axisValues = Seq(play27, VirtualAxis.jvm),
     _.settings(
-      moduleName := name.value + "-play2.7",
+      moduleName := name.value + "2.7",
       libraryDependencies ++= Seq(
         "com.typesafe.play" %% "play" % "2.7.9",
         "com.typesafe.play" %% "routes-compiler" % "2.7.9",
@@ -52,7 +57,7 @@ lazy val app = (projectMatrix in file("."))
     scalaVersions = Seq(scala213, scala212),
     axisValues = Seq(play28, VirtualAxis.jvm),
     _.settings(
-      moduleName := name.value + "-play2.8",
+      moduleName := name.value + "2.8",
       libraryDependencies ++= Seq(
         "com.typesafe.play" %% "play" % "2.8.7",
         "com.typesafe.play" %% "routes-compiler" % "2.8.7",
@@ -63,6 +68,8 @@ lazy val app = (projectMatrix in file("."))
       )
     )
   )
+
+Global / excludeLintKeys += ideSkipProject
 
 ThisBuild / pomExtra := {
   <url>http://swagger.io</url>
