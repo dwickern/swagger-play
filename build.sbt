@@ -22,7 +22,6 @@ lazy val swagger = (projectMatrix in file("."))
     name := "swagger-play",
     libraryDependencies ++= Seq(
       "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.3",
-      "org.slf4j" % "slf4j-api" % "1.7.30",
       "org.specs2" %% "specs2-core" % "4.6.0" % Test,
       "org.specs2" %% "specs2-mock" % "4.6.0" % Test,
       "org.specs2" %% "specs2-junit" % "4.6.0" % Test,
