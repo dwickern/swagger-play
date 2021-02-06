@@ -1,6 +1,8 @@
-[![Build Status](https://travis-ci.org/swagger-api/swagger-play.svg?branch=master)](https://travis-ci.org/swagger-api/swagger-play)
 
 # Swagger Play2 Module
+
+[![build](https://github.com/dwickern/swagger-play/workflows/build/badge.svg)](https://github.com/dwickern/swagger-play/actions)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.dwickern/swagger-play2.8_2.13/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.dwickern/swagger-play2.8_2.13)
 
 This fork is cross-compiled for Play 2.7 and 2.8 with Scala 2.12 and 2.13.
 
