@@ -135,7 +135,8 @@ PUT /api/dog/api/:id testdata.DogController.add0(id:String)
       opCatPut.getParameters.asScala.head.getIn must beEqualTo("body")
       opCatPut.getParameters.asScala.head.asInstanceOf[BodyParameter].getSchema.getReference must beEqualTo("#/definitions/Cat")
       opCatPut.getConsumes must beNull
-      opCatPut.getResponses.get("200").getSchema.asInstanceOf[RefProperty].getSimpleRef must beEqualTo("ActionAnyContent")
+      opCatPut.getResponses.get("200") must beNull
+      opCatPut.getResponses.get("default") must not (beNull)
       opCatPut.getProduces must beNull
       opCatPut.getSecurity.get(0).get("oauth2").get(0) must beEqualTo("write_pets")
 
@@ -170,7 +171,8 @@ PUT /api/dog/api/:id testdata.DogController.add0(id:String)
       opDogPut.getParameters.asScala.head.getIn must beEqualTo("body")
       opDogPut.getParameters.asScala.head.asInstanceOf[BodyParameter].getSchema.getReference must beEqualTo("#/definitions/Dog")
       opDogPut.getConsumes.asScala.toList must beEqualTo(List("application/json","application/xml"))
-      opDogPut.getResponses.get("200").getSchema.asInstanceOf[RefProperty].getSimpleRef must beEqualTo("ActionAnyContent")
+      opDogPut.getResponses.get("200") must beNull
+      opDogPut.getResponses.get("default") must not (beNull)
       opDogPut.getProduces.asScala.toList must beEqualTo(List("application/json","application/xml"))
 
       val pathDogParam = swagger.getPaths.get("/dog/api/{id}")
@@ -183,7 +185,8 @@ PUT /api/dog/api/:id testdata.DogController.add0(id:String)
       opDogParamPut.getParameters.asScala.head.asInstanceOf[PathParameter].getType must beEqualTo("string")
       opDogParamPut.getConsumes.asScala.toList must beEqualTo(List("application/json","application/xml"))
       opDogParamPut.getProduces.asScala.toList must beEqualTo(List("application/json","application/xml"))
-      opDogParamPut.getResponses.get("200").getSchema.asInstanceOf[RefProperty].getSimpleRef must beEqualTo("ActionAnyContent")
+      opDogParamPut.getResponses.get("200") must beNull
+      opDogParamPut.getResponses.get("default") must not (beNull)
 
       val catDef = swagger.getDefinitions.get("Cat").asInstanceOf[ModelImpl]
       catDef.getType must beEqualTo("object")

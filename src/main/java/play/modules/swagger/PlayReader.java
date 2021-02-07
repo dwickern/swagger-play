@@ -741,6 +741,15 @@ public class PlayReader {
             return false;
         }
         final Class<?> cls = javaType.getRawClass();
+        if (play.api.mvc.EssentialAction.class.isAssignableFrom(cls)) {
+            return false;
+        }
+        if (play.mvc.Result.class.isAssignableFrom(cls)) {
+            return false;
+        }
+        if (play.api.mvc.Result.class.isAssignableFrom(cls)) {
+            return false;
+        }
         return !isResourceClass(cls);
     }
 
