@@ -6,6 +6,31 @@
 
 This fork is cross-compiled for Play 2.7 and 2.8 with Scala 2.12 and 2.13.
 
+```sbt
+// for Play 2.7:
+libraryDependencies += "com.github.dwickern" %% "swagger-play2.7" % "3.0.0"
+
+// for Play 2.8.0 - 2.8.7:
+libraryDependencies += "com.github.dwickern" %% "swagger-play2.8" % "3.0.0"
+
+// for Play 2.8.8 or later:
+libraryDependencies ++= Seq(
+  "com.github.dwickern" %% "swagger-play2.8" % "3.0.0",
+  "io.swagger" % "swagger-core" % "1.6.2"
+)
+```
+
+Make sure all of your dependencies (including other third-party libraries) use a compatible version of Jackson:
+
+| playframework | jackson | swagger-core |
+|---------------|---------|--------------|
+| 2.7           | 2.9.x   | 1.5.24       |
+| 2.8.0-2.8.7   | 2.10.x  | 1.6.0-1.6.1  |
+| 2.8.8         | 2.11.x  | 1.6.2        |
+
+This library is also available as a SBT plugin: [sbt-swagger-play](https://github.com/dwickern/sbt-swagger-play)
+
+
 ## Overview
 
 This is a module to support Swagger annotations within [Play Framework](http://www.playframework.org) controllers. It is based on the library https://github.com/swagger-api/swagger-play with several improvements. It can be used for both Scala and Java based applications.
@@ -29,13 +54,7 @@ We also would like to support Swagger 2.0 in the future and contributions to tha
 
 You can depend on pre-built libraries in maven central by adding the following dependency:
 
-```sbt
-// for Play 2.7:
-libraryDependencies += "com.github.dwickern" %% "swagger-play2.7" % "3.0.0"
-
-// for Play 2.8:
-libraryDependencies += "com.github.dwickern" %% "swagger-play2.8" % "3.0.0"
-```
+(see above)
 
 Or you can build from source.
 
