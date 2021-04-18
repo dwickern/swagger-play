@@ -8,14 +8,14 @@ This fork is cross-compiled for Play 2.7 and 2.8 with Scala 2.12 and 2.13.
 
 ```sbt
 // for Play 2.7:
-libraryDependencies += "com.github.dwickern" %% "swagger-play2.7" % "3.0.0"
+libraryDependencies += "com.github.dwickern" %% "swagger-play2.7" % "3.1.0"
 
 // for Play 2.8.0 - 2.8.7:
-libraryDependencies += "com.github.dwickern" %% "swagger-play2.8" % "3.0.0"
+libraryDependencies += "com.github.dwickern" %% "swagger-play2.8" % "3.1.0"
 
 // for Play 2.8.8 or later:
 libraryDependencies ++= Seq(
-  "com.github.dwickern" %% "swagger-play2.8" % "3.0.0",
+  "com.github.dwickern" %% "swagger-play2.8" % "3.1.0",
   "io.swagger" % "swagger-core" % "1.6.2"
 )
 ```
