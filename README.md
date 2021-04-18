@@ -16,7 +16,8 @@ libraryDependencies += "com.github.dwickern" %% "swagger-play2.8" % "3.1.0"
 // for Play 2.8.8 or later:
 libraryDependencies ++= Seq(
   "com.github.dwickern" %% "swagger-play2.8" % "3.1.0",
-  "io.swagger" % "swagger-core" % "1.6.2"
+  "io.swagger" % "swagger-core" % "1.6.2",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.11.1"
 )
 ```
 
