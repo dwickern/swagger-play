@@ -100,7 +100,7 @@ object SwaggerPluginHelper {
     logger.debug(s"Processing route file '$routesFile' with prefix '$prefix'")
 
     val parsedRoutes = env.resourceAsStream(routesFile).map { stream =>
-      val routesContent = Source.fromInputStream(stream).mkString
+      val routesContent = Source.fromInputStream(stream)("UTF-8").mkString
       RoutesFileParser.parseContent(routesContent, new File(routesFile))
     }.getOrElse(Right(List.empty)) // ignore routes files that don't exist
 
