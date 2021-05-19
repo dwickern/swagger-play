@@ -27,6 +27,7 @@ Make sure all of your dependencies (including other third-party libraries) use a
 |---------------|---------|--------------|
 | 2.7           | 2.9.x   | 1.5.24       |
 | 2.8.0-2.8.7   | 2.10.x  | 1.6.0-1.6.1  |
+| 2.8.2         | 2.10.x  | 1.6.0-1.6.1  |
 | 2.8.8         | 2.11.x  | 1.6.2        |
 
 This library is also available as a SBT plugin: [sbt-swagger-play](https://github.com/dwickern/sbt-swagger-play)

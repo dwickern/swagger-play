@@ -2,6 +2,7 @@ ThisBuild / organization := "com.github.dwickern"
 
 lazy val play27 = ConfigAxis("play27", "play2.7")
 lazy val play28 = ConfigAxis("play28", "play2.8")
+lazy val play282 = ConfigAxis("play282", "play2.8.2")
 
 lazy val scala212 = "2.12.13"
 lazy val scala213 = "2.13.4"
@@ -65,6 +66,21 @@ lazy val swagger = (projectMatrix in file("."))
       libraryDependencies ++= Seq(
         "com.typesafe.play" %% "play" % "2.8.7",
         "com.typesafe.play" %% "routes-compiler" % "2.8.7",
+        "io.swagger" % "swagger-core" % "1.6.1",
+        "io.swagger" %% "swagger-scala-module" % "1.0.6", // FIXME: no version supports jackson 2.10
+        "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.10.5",
+        "com.typesafe.play" %% "play-ebean" % "6.0.0" % Test,
+      )
+    )
+  )
+  .customRow(
+    scalaVersions = Seq(scala213, scala212),
+    axisValues = Seq(play282, VirtualAxis.jvm),
+    _.settings(
+      moduleName := name.value + "2.8.2",
+      libraryDependencies ++= Seq(
+        "com.typesafe.play" %% "play" % "2.8.2",
+        "com.typesafe.play" %% "routes-compiler" % "2.8.2",
         "io.swagger" % "swagger-core" % "1.6.1",
         "io.swagger" %% "swagger-scala-module" % "1.0.6", // FIXME: no version supports jackson 2.10
         "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.10.5",
