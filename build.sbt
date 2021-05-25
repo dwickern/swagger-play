@@ -48,8 +48,8 @@ lazy val swagger = (projectMatrix in file("."))
     _.settings(
       moduleName := name.value + "2.7",
       libraryDependencies ++= Seq(
-        "com.typesafe.play" %% "play" % "2.7.9",
-        "com.typesafe.play" %% "routes-compiler" % "2.7.9",
+        "com.typesafe.play" %% "play" % "2.7.0",
+        "com.typesafe.play" %% "routes-compiler" % "2.7.0",
         "io.swagger" % "swagger-core" % "1.5.24",
         "io.swagger" %% "swagger-scala-module" % "1.0.6",
         "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.10",
@@ -63,8 +63,8 @@ lazy val swagger = (projectMatrix in file("."))
     _.settings(
       moduleName := name.value + "2.8",
       libraryDependencies ++= Seq(
-        "com.typesafe.play" %% "play" % "2.8.7",
-        "com.typesafe.play" %% "routes-compiler" % "2.8.7",
+        "com.typesafe.play" %% "play" % "2.8.0",
+        "com.typesafe.play" %% "routes-compiler" % "2.8.0",
         "io.swagger" % "swagger-core" % "1.6.1",
         "io.swagger" %% "swagger-scala-module" % "1.0.6", // FIXME: no version supports jackson 2.10
         "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.10.5",
