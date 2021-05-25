@@ -61,11 +61,24 @@ class ErrorResponse(@XmlElement var code: Int, @XmlElement var message: String) 
   def setMessage(message: String) = this.message = message
 }
 
+/**
+ * For Java8, add support for a `aString.is_blank` function.
+ * Cannot be called `isBlank` since that conflicts with Java 11's `java.lang.String.isBlank`.
+ * Can be removed in favor of `java.lang.String.isBlank` when updating to Java 11.
+ */
+object Java8Utils {
+  implicit class StringExtension(val s: String) extends AnyVal {
+    def is_blank: Boolean = s.trim == ""
+  }
+}
+
 class ApiHelpController @Inject() (components: ControllerComponents, val swaggerPlugin: SwaggerPlugin)
   extends AbstractController(components) with SwaggerBaseApiController {
 
+  import Java8Utils.StringExtension
+
   def getResources = Action { implicit request =>
-    val host = if (swaggerPlugin.config.host.isBlank) request.host else swaggerPlugin.config.host
+    val host = if (swaggerPlugin.config.host.is_blank) request.host else swaggerPlugin.config.host
     val resourceListing: Swagger = getResourceListing(host)
     val response: String = returnXml(request) match {
       case true => toXmlString(resourceListing)
@@ -75,7 +88,7 @@ class ApiHelpController @Inject() (components: ControllerComponents, val swagger
   }
 
   def getResource(path: String) = Action { implicit request =>
-    val host = if (swaggerPlugin.config.host.isBlank) request.host else swaggerPlugin.config.host
+    val host = if (swaggerPlugin.config.host.is_blank) request.host else swaggerPlugin.config.host
     val apiListing: Swagger = getApiListing(path, host)
     val response: String = returnXml(request) match {
       case true => toXmlString(apiListing)
