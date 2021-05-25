@@ -48,8 +48,8 @@ lazy val swagger = (projectMatrix in file("."))
     _.settings(
       moduleName := name.value + "2.7",
       libraryDependencies ++= Seq(
-        "com.typesafe.play" %% "play" % "2.7.0",
-        "com.typesafe.play" %% "routes-compiler" % "2.7.0",
+        "com.typesafe.play" %% "play" % "2.7.3",
+        "com.typesafe.play" %% "routes-compiler" % "2.7.3",
         "io.swagger" % "swagger-core" % "1.5.24",
         "io.swagger" %% "swagger-scala-module" % "1.0.6",
         "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.10",
