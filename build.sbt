@@ -15,6 +15,7 @@ lazy val root = (project in file("."))
     ideSkipProject := false,
     compile / skip := true,
     publish / skip := true,
+    commands += testPlayVersionCommand
   )
 
 lazy val swagger = (projectMatrix in file("."))
@@ -48,8 +49,8 @@ lazy val swagger = (projectMatrix in file("."))
     _.settings(
       moduleName := name.value + "2.7",
       libraryDependencies ++= Seq(
-        "com.typesafe.play" %% "play" % "2.7.9",
-        "com.typesafe.play" %% "routes-compiler" % "2.7.9",
+        "com.typesafe.play" %% "play" % "2.7.3",
+        "com.typesafe.play" %% "routes-compiler" % "2.7.3",
         "io.swagger" % "swagger-core" % "1.5.24",
         "io.swagger" %% "swagger-scala-module" % "1.0.6",
         "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.10",
@@ -63,8 +64,8 @@ lazy val swagger = (projectMatrix in file("."))
     _.settings(
       moduleName := name.value + "2.8",
       libraryDependencies ++= Seq(
-        "com.typesafe.play" %% "play" % "2.8.7",
-        "com.typesafe.play" %% "routes-compiler" % "2.8.7",
+        "com.typesafe.play" %% "play" % "2.8.0",
+        "com.typesafe.play" %% "routes-compiler" % "2.8.0",
         "io.swagger" % "swagger-core" % "1.6.1",
         "io.swagger" %% "swagger-scala-module" % "1.0.6", // FIXME: no version supports jackson 2.10
         "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.10.5",
@@ -72,6 +73,31 @@ lazy val swagger = (projectMatrix in file("."))
       )
     )
   )
+
+/**
+ * Run tests using a specific Play version
+ *
+ * Usage:
+ *   sbt "testPlayVersion 2.8.8"
+ */
+lazy val testPlayVersionCommand = Command.single("testPlayVersion") { case (state, playVersion) =>
+  val projectAxis = if (VersionNumber(playVersion).matchesSemVer(SemanticSelector("2.7.x"))) play27 else play28
+  swagger.finder(projectAxis, VirtualAxis.jvm).get.foldLeft(state) { case (state, project) =>
+    /** Extra dependencies needed for Play 2.8.8  */
+    val play288extras = if (VersionNumber(playVersion).matchesSemVer(SemanticSelector(">=2.8.8"))) {
+      Seq(
+        "io.swagger" % "swagger-core" % "1.6.2",
+        "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.11.1"
+      )
+    } else Seq.empty
+    val newState = Project.extract(state).appendWithoutSession(Seq(
+      project / libraryDependencies ++= Seq(
+        "com.typesafe.play" %% "play" % playVersion,
+      ) ++ play288extras
+    ), state)
+    Project.extract(newState).runAggregated(project / Test / test, newState)
+  }
+}
 
 Global / excludeLintKeys += ideSkipProject
 

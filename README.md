@@ -7,7 +7,7 @@
 This fork is cross-compiled for Play 2.7 and 2.8 with Scala 2.12 and 2.13.
 
 ```sbt
-// for Play 2.7:
+// for Play 2.7.3 - 2.7.9:
 libraryDependencies += "com.github.dwickern" %% "swagger-play2.7" % "3.1.0"
 
 // for Play 2.8.0 - 2.8.7:
