@@ -4,7 +4,7 @@ lazy val play27 = ConfigAxis("play27", "play2.7")
 lazy val play28 = ConfigAxis("play28", "play2.8")
 
 lazy val scala212 = "2.12.13"
-lazy val scala213 = "2.13.4"
+lazy val scala213 = "2.13.6"
 
 lazy val root = (project in file("."))
   .aggregate(swagger.projectRefs: _*)
